@@ -6,7 +6,12 @@ import { UsuariosArmazenados } from "./usuario.dm";
 
 @Controller('/usuarios')
 export class UsuarioController{
-    Usuarios = new UsuariosArmazenados();
+    
+    constructor(private Usuarios : UsuariosArmazenados){
+
+    }
+
+    
     @Post()
     async criaUsuario(@Body() dadosUsuario: criaUsuarioDTO){        
         var novoUsuario = new UsuarioEntity(uuid(), dadosUsuario.nome, dadosUsuario.idade, 
