@@ -9,6 +9,14 @@ export class UsuariosArmazenados{
         this.#usuarios.push(usuario);
     }
 
+    validaEmail(emailNovo: string){
+        const possivelUsuario = this.#usuarios.find(
+            usuario => usuario.email == emailNovo
+        )
+        
+        return (possivelUsuario === undefined)
+    }
+
  
 
     get Usuarios(){        
