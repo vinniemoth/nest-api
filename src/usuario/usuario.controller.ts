@@ -14,21 +14,12 @@ export class UsuarioController{
 
     @Post()
     async criaUsuario(@Body() dadosUsuario: criaUsuarioDTO){        
-        var emailValido =this.Usuarios.validaEmail( dadosUsuario.email);
         var novoUsuario = new UsuarioEntity(uuid(), dadosUsuario.nome, dadosUsuario.idade, 
                                             dadosUsuario.cidade, dadosUsuario.email,
                                             dadosUsuario.telefone, dadosUsuario.senha
         )
-        
-        if (emailValido){
-            this.Usuarios.AdicionarUsuario(novoUsuario);
-            var retorno = new RetornoUsuarioDTO('Usuario criado',novoUsuario);
-            
-           
-        }else{  
-            var retorno = new RetornoUsuarioDTO('Usuario não criado - email duplicado',null);            
-        }
-
+        this.Usuarios.AdicionarUsuario(novoUsuario);
+        var retorno = new RetornoUsuarioDTO('Usuario criado',novoUsuario);        
         return retorno
         
         
