@@ -4,6 +4,7 @@ import { UsuarioEntity } from "./usuario.entity";
 import {v4  as uuid} from 'uuid'
 import { UsuariosArmazenados } from "./usuario.dm";
 import { RetornoUsuarioDTO } from "./dto/retornoUsuario.dto";
+import { ListaUsuarioDTO } from "./dto/listaUsuario.dto";
 
 @Controller('/usuarios')
 export class UsuarioController{
@@ -27,8 +28,20 @@ export class UsuarioController{
 
     @Get()
     async retornaUsuario(){
+
+        var usuariosListados = this.Usuarios.Usuarios;
+        const ListaRetorno = usuariosListados.map(
+            usuario => new ListaUsuarioDTO(
+                usuario.id,
+                usuario.nome,
+                usuario.email
+            )
+        );
+
+
+
         return {
-                Usuarios: this.Usuarios.Usuarios
+                Usuarios: ListaRetorno
             };
     }
 }
