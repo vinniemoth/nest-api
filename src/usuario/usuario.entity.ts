@@ -1,3 +1,4 @@
+//classe de usuário, utilizado para manter padrão dos usuários armazenados
 export class UsuarioEntity{
     id: string;
     nome: string;

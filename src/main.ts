@@ -1,3 +1,4 @@
+//arquivo com função de inicio da aplicação, responsável por iniciar o projeto e dar parametros de execução.
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';

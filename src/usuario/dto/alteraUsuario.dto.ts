@@ -1,7 +1,12 @@
+//classe responsável por definir padrão para alteração de usuários
+//DTO é "data transfer object" ou objeto de transferencia de dados, ou seja, é um tipo de classe para transferir dados
 import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, MinLength } from "class-validator";
 import { EmailUnico } from "../validacao/email-unico.validator";
 
 export class alteraUsuarioDTO{
+
+    //decorators de tipo e validação, são responsáveis por darem padrão e validar informações importantes nos DTOs
+    //podem ser prédefinidos ou podem ser criados de forma customizada(exemplo email unico)
     @IsString()
     @IsNotEmpty({message: "nome não pode ser vazio"})
     @IsOptional()
