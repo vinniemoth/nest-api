@@ -8,10 +8,24 @@ import { alteraUsuarioDTO } from "./dto/alteraUsuario.dto";
 export class UsuariosArmazenados{
     //Criação de vetor para armazenar os usuários (apenas em memoria, quando reiniciar a API perde tudo)
     #usuarios: UsuarioEntity[] = [];  
+  
 
     //funçaço responsável por guardar o usuário no vetor
     AdicionarUsuario(usuario: UsuarioEntity){
         this.#usuarios.push(usuario);
+    }
+
+    //função responsável por remover o usuário
+    async removeUsuario(id:string){
+        //pesquisa usuário pelo id passado para retornar ele 
+        const usuario = this.pesquisaId(id);
+
+        //filtra removendo o usário informado
+        this.#usuarios = this.#usuarios.filter(
+            usuarioSalvo => usuarioSalvo.id !== id
+        )
+
+        return usuario
     }
 
 

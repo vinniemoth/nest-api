@@ -1,7 +1,7 @@
 //classe controller do módulo de usuário
 //Classe controller é responsável por receber as requisições de fora da API, ele adminstra as requisições recebendo e respondendo elas.
 
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { criaUsuarioDTO } from "./dto/usuario.dto";
 import { UsuarioEntity } from "./usuario.entity";
 import {v4  as uuid} from 'uuid'
@@ -57,6 +57,16 @@ export class UsuarioController{
         var retornoAlteracao = this.Usuarios.alteraUsuario(id,dadosNovos)
         //criação do padrão de retorno
         var retorno = new RetornoUsuarioDTO('Alteração Efetuada',retornoAlteracao);        
+        return retorno;       
+        
+    }
+
+    @Delete('/:id')//linha que define o método vai ser de exclusão (delete), nesse caso também é especificado um parametro na URL, por onde vai chegar o id do usuário
+    async removeUsuario(@Param('id') id: string){//aqui é definido que vai receber dados da URL(param)
+        //aqui é chamada a função de exclusão de usuário, onde ja é feita toda a exclusão do usuário
+        var retornoExclusao = await this.Usuarios.removeUsuario(id)
+        //criação do padrão de retorno
+        var retorno = new RetornoUsuarioDTO('Exclusão Efetuada',retornoExclusao);        
         return retorno;       
         
     }
