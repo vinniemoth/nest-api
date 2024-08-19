@@ -11,13 +11,24 @@ export class pessoaArmazenada {
     this.pessoas.push(pessoa);
   }
 
-  pesquisaId(id: string) {
-    const possivelPessoa = this.Pessoas.find(
-      (pessoaSalva) => pessoaSalva.id === id,
+  pesquisaAno(ano: number) {
+    const possivelPessoa = this.pessoas.filter(
+      (pessoaSalva) => pessoaSalva.nascimento === ano,
     );
 
     if (!possivelPessoa) {
       throw new Error('Pessoa não encontrada.');
+    }
+    return possivelPessoa;
+  }
+
+  pesquisaId(id: string) {
+    const possivelPessoa = this.pessoas.find(
+      (pessoaSalva) => pessoaSalva.id === id,
+    );
+
+    if (!possivelPessoa) {
+      throw new Error('Id de pessoa não encontrado.');
     }
     return possivelPessoa;
   }
@@ -32,6 +43,14 @@ export class pessoaArmazenada {
 
       pessoa[chave] = valor;
     });
+
+    return pessoa;
+  }
+
+  removePessoa(id: string) {
+    const pessoa = this.pesquisaId(id);
+
+    this.pessoas = this.pessoas.filter((pessoaSalva) => pessoaSalva.id !== id);
 
     return pessoa;
   }
