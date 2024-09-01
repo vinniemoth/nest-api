@@ -3,11 +3,13 @@
 import { Module } from '@nestjs/common';
 import { UsuarioModule } from './usuario/usuario.module';
 import { PessoaModule } from './pessoa/pessoa.module';
+import { AdminModule } from './admin/admin.module';
+import { QuadrinhoModule } from './quadrinho/quadrinho.module';
 
 
 
 @Module({
-  imports: [UsuarioModule, PessoaModule],
+  imports: [UsuarioModule, PessoaModule, AdminModule, QuadrinhoModule],
   controllers: [],
   providers: [],
 })
