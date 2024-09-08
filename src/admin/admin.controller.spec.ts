@@ -8,10 +8,8 @@ describe('AdminController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AdminController],
     }).compile();
-
     controller = module.get<AdminController>(AdminController);
   });
-
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });

@@ -8,10 +8,8 @@ describe('QuadrinhoController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [QuadrinhoController],
     }).compile();
-
     controller = module.get<QuadrinhoController>(QuadrinhoController);
   });
-
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });

@@ -13,15 +13,11 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 export class QuadrinhoController {
   constructor(private Quadrinhos: quadrinhoArmazenado) {}
 
-  @ApiResponse({
-    status: 201,
-    description: 'Retorna que houve sucesso ao criar o quadrinho',
-  })
-  @ApiResponse({
-    status: 400,
-    description:
-      'Retorna que não foi possível criar o quadrinho. Verifique os dados.',
-  })
+  @ApiResponse({status: 201,
+                description: 'Retorna que houve sucesso ao criar o quadrinho',})
+  @ApiResponse({status: 400,
+                description:'Retorna que não foi possível criar o quadrinho. Verifique os dados.'})
+
   @Post()
   async criaQuadrinho(@Body() dadosQuadrinho: CriaQuadrinhoDTO) {
     let novoQuadrinho = new QuadrinhoEntity(
@@ -38,14 +34,11 @@ export class QuadrinhoController {
     return retorno;
   }
 
-  @ApiResponse({
-    status: 200,
-    description: 'Retorna que houve sucesso ao encontrar os quadrinhos',
-  })
-  @ApiResponse({
-    status: 500,
-    description: 'Retorna que não foi possível encontrar os quadrinhos',
-  })
+  @ApiResponse({status: 200,
+                description: 'Retorna que houve sucesso ao encontrar os quadrinhos'})     
+  @ApiResponse({status: 500,
+                description: 'Retorna que não foi possível encontrar os quadrinhos'})
+
   @Get()
   async retornaQuadrinho() {
     let quadrinhosListados = this.Quadrinhos.Quadrinhos;
@@ -66,16 +59,10 @@ export class QuadrinhoController {
     };
   }
 
-  @ApiResponse({
-    status: 200,
-    description:
-      'Retorna que houve sucesso ao encontrar o quadrinho com determinada id',
-  })
-  @ApiResponse({
-    status: 500,
-    description:
-      'Retorna que não foi possível encontrar o quadrinho com determinada id',
-  })
+  @ApiResponse({status: 200,
+                description:'Retorna que houve sucesso ao encontrar o quadrinho com determinada id'})
+  @ApiResponse({status: 500,
+                description:'Retorna que não foi possível encontrar o quadrinho com determinada id'})
   @Get('/:id')
   async pesquisaId(@Param('id') id: string) {
     let quadrinhosListados = this.Quadrinhos.pesquisaId(id);
@@ -93,16 +80,10 @@ export class QuadrinhoController {
     };
   }
 
-  @ApiResponse({
-    status: 200,
-    description:
-      'Retorna que houve sucesso ao atualizar o quadrinho com determinada id',
-  })
-  @ApiResponse({
-    status: 500,
-    description:
-      'Retorna que não foi possível atualizar o quadrinho com determinada id',
-  })
+  @ApiResponse({status: 200,
+                description:'Retorna que houve sucesso ao atualizar o quadrinho com determinada id'})              
+  @ApiResponse({status: 500,
+                description:'Retorna que não foi possível atualizar o quadrinho com determinada id'})
   @Put('/:id')
   async alteraQuadrinho(
     @Body() dadosNovos: AlteraQuadrinhoDTO,
