@@ -14,12 +14,10 @@ export class AdminController {
 
   @ApiResponse({
     status: 201,
-    description: 'Retorna que o admin foi criado com sucesso.',
-  })
+    description: 'Retorna que o admin foi criado com sucesso.',})
   @ApiResponse({
     status: 400,
-    description: 'Retorna que houve erro ao criar admin. Verifique os dados.',
-  })
+    description: 'Retorna que houve erro ao criar admin. Verifique os dados.',})
   @Post()
   async criaAdmin(@Body() dadosAdmin: CriaAdminDTO) {
     let novoAdmin = new AdminEntity(

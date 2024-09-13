@@ -36,7 +36,6 @@ export class quadrinhoArmazenado {
 
   removeQuadrinho(id: string) {
     const quadrinho = this.pesquisaId(id);
-
     this.quadrinhos = this.quadrinhos.filter(
       (quadrinhoSalvo) => quadrinhoSalvo.id !== id,
     );
