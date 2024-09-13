@@ -8,7 +8,6 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
-import { EmailUnico } from '../validacao/email-unico.validator';
 import { SenhaForte } from '../validacao/strongpass.validator';
 
 export class alteraUsuarioDTO {
@@ -19,7 +18,6 @@ export class alteraUsuarioDTO {
   @IsOptional()
   nome: string;
 
-  @EmailUnico({ message: 'Email repetido' })
   @IsEmail(undefined, { message: 'email inválido' })
   @IsOptional()
   email: string;

@@ -8,18 +8,13 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
-import { EmailUnico } from '../validacao/email-unico.validator';
-import {
-  SenhaForte,
-  StrongPassValidator,
-} from '../validacao/strongpass.validator';
+import { SenhaForte } from '../validacao/strongpass.validator';
 
 export class criaUsuarioDTO {
   @IsString()
   @IsNotEmpty({ message: 'nome não pode ser vazio' })
   nome: string;
 
-  @EmailUnico({ message: 'Email repetido' })
   @IsEmail(undefined, { message: 'email inválido' })
   email: string;
 
