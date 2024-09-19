@@ -11,4 +11,16 @@ export class AdminArmazenado {
   get Admins() {
     return this.admins;
   }
+
+  pesquisaEmail(email:string){
+    const possivelAdmin = this.Admins.find(
+      (admin) => admin.email == email,
+      );
+      return possivelAdmin;
+  }
+
+  // login(email:string,senha:string){
+  //   const possivelAdmin = this.pesquisaEmail(email);
+  //   return {admin:possivelAdmin.login(senha)}
+  // }
 }

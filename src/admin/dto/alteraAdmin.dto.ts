@@ -1,0 +1,38 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEmail, IsNotEmpty, IsString, MinLength, IsOptional } from 'class-validator';
+import { SenhaForte } from '../validacao/strongpass.validator';
+
+export class CriaAdminDTO {
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  @ApiPropertyOptional({
+    example: 'Carlos Eduardo',
+    description:
+      'Nome usado como identificador do administrador, tal qual QUEM subiu ou alterou os dados',
+  })
+  nome: string;
+
+  @IsEmail()
+  @IsNotEmpty()
+  @IsOptional()
+  @ApiPropertyOptional({
+    example: 'carloseduardo@example.com',
+    description:
+      'Email usado como identificador do administrador, e para Login.',
+  })
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(8)
+  @IsOptional()
+  @SenhaForte({
+    message: 'Senha deve ter complexidade maior. Está muito fraca.',
+  })
+  @ApiPropertyOptional({
+    example: 'carlosEduardo123',
+    description: 'Senha utilizada para fazer login',
+  })
+  senha: string;
+}

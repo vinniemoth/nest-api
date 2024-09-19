@@ -11,7 +11,7 @@ export class CriaAutorDTO{
 
     @IsString()
     @IsNotEmpty()
-    @ApiProperty({example: "Imagem",
+    @ApiProperty({example: "http://www.bancodeimagens.com/the-avengers/01/capa.png",
                   description: "O beleza do autor do quadrinho a ser inserida"})
     foto: string;
 

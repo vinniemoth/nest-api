@@ -10,8 +10,8 @@ export class AlteraAutorDTO{
     
     @IsString()
     @IsOptional()
-    @ApiPropertyOptional({example:'pedaço de mal caminho',
-        description:'Aletração da imagem utilizada pelo autor'
+    @ApiPropertyOptional({example:'http://www.bancodeimagens.com/the-avengers/01/capa.png',
+        description:'Alteração da imagem utilizada pelo autor'
     })
     foto: string;
 

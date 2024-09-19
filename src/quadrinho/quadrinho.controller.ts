@@ -2,10 +2,10 @@ import { Controller, Post, Body, Get, Param, Put } from '@nestjs/common';
 import { quadrinhoArmazenado } from './quadrinho.dm';
 import { CriaQuadrinhoDTO } from './dto/criaQuadrinho.dto';
 import { QuadrinhoEntity } from './quadrinho.entity';
-import { v4 as uuid } from 'uuid';
 import { retornaQuadrinhoDto } from './dto/retornaQuadrinho.dto';
 import { listaQuadrinhoDTO } from './dto/listaQuadrinho.dto';
 import { AlteraQuadrinhoDTO } from './dto/alteraQuadrinho.dto';
+import { v4 as uuid } from 'uuid';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Quadrinhos')

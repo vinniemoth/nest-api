@@ -11,7 +11,7 @@ export class CriaEditoraDTO{
 
     @IsString()
     @IsNotEmpty()
-    @ApiProperty({example: "Imagem",
+    @ApiProperty({example: "http://www.bancodeimagens.com/the-avengers/01/capa.png",
                   description: "O logotipo da editora do quadrinho a ser inserido"})
     logo: string;
 

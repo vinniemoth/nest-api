@@ -6,6 +6,7 @@ import { CriaAdminDTO } from './dto/criaAdmin.dto';
 import { retornaAdminDTO } from './dto/retornaAdmin.dto';
 import { ListaAdminDTO } from './dto/listaAdmin.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { loginAdminDTO } from './dto/loginAdmin.dto';
 
 @ApiTags('Usuários')
 @Controller('/admin')
@@ -32,6 +33,13 @@ export class AdminController {
     let retorno = new retornaAdminDTO('Admin Criado', novoAdmin);
     return retorno;
   }
+
+  @Post("/login")
+  // async fazerLogin(@Body() dadosLogin:loginAdminDTO){
+  //   let retornoLogin = this.Admins.login(dadosLogin.email, dadosLogin.senha);
+  //   let retorno = new retornaAdminDTO(retornoLogin.status?"Login efetuado":"Email ou senha inválidos",retornoLogin.usuario);
+  //   return retorno;
+  // }
 
   @ApiResponse({
     status: 200,
