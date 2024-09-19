@@ -35,11 +35,11 @@ export class AdminController {
   }
 
   @Post("/login")
-  // async fazerLogin(@Body() dadosLogin:loginAdminDTO){
-  //   let retornoLogin = this.Admins.login(dadosLogin.email, dadosLogin.senha);
-  //   let retorno = new retornaAdminDTO(retornoLogin.status?"Login efetuado":"Email ou senha inválidos",retornoLogin.usuario);
-  //   return retorno;
-  // }
+  async fazerLogin(@Body() dadosLogin:loginAdminDTO){
+    let retornoLogin = this.Admins.loginAdmin(dadosLogin.email, dadosLogin.senha);
+    let retorno = new retornaAdminDTO(retornoLogin.status?"Login efetuado":"Email ou senha inválidos",retornoLogin.usuario);
+    return retorno;
+  }
 
   @ApiResponse({
     status: 200,
