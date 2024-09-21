@@ -5,7 +5,7 @@ export class UsuarioEntity{
     nome:string;
     email:string;
     senha:string;
-
+    
     constructor(id:string,nome:string,email:string,senha:string){
         const saltOrRounds = 10;
         this.id = id;

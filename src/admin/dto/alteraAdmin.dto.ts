@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString, MinLength, IsOptional } from 'class-validator';
 import { SenhaForte } from '../validacao/strongpass.validator';
 
-export class CriaAdminDTO {
+export class AlteraAdminDTO {
   @IsString()
   @IsNotEmpty()
   @IsOptional()

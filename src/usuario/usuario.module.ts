@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { QuadrinhoController } from './quadrinho.controller';
-import { quadrinhoArmazenado } from './quadrinho.dm';
+import { UsuarioController } from './usuario.controller';
+import { UsuariosArmazenados } from './usuario.dm';
 
 @Module({
-  controllers: [usuarioController],
-  providers: [usuarioArmazenado],
+  controllers: [UsuarioController],
+  providers: [UsuariosArmazenados],
 })
 export class UsuarioModule {}

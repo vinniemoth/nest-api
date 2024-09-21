@@ -13,6 +13,8 @@ import { loginAdminDTO } from './dto/loginAdmin.dto';
 export class AdminController {
   constructor(private Admins: AdminArmazenado) {}
 
+
+  // ** Criação do admin **
   @ApiResponse({
     status: 201,
     description: 'Retorna que o admin foi criado com sucesso.',
@@ -34,6 +36,7 @@ export class AdminController {
     return retorno;
   }
 
+  // ** Login do Admin **
   @Post("/login")
   async fazerLogin(@Body() dadosLogin:loginAdminDTO){
     let retornoLogin = this.Admins.loginAdmin(dadosLogin.email, dadosLogin.senha);
@@ -41,6 +44,8 @@ export class AdminController {
     return retorno;
   }
 
+
+  // ** Retorno de Admin **
   @ApiResponse({
     status: 200,
     description: 'Retorna que houve sucesso ao encontrar os admins',
