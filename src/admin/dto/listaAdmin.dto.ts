@@ -1,7 +1,7 @@
 export class ListaAdminDTO {
   constructor(
-    readonly id: string,
-    readonly nome: string,
-    readonly email: string,
+    readonly ID: string,
+    readonly NOME: string,
+    readonly EMAIL: string,
   ) {}
 }

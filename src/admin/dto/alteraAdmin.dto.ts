@@ -1,5 +1,11 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString, MinLength, IsOptional } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  MinLength,
+  IsOptional,
+} from 'class-validator';
 import { SenhaForte } from '../validacao/strongpass.validator';
 
 export class AlteraAdminDTO {
@@ -11,7 +17,7 @@ export class AlteraAdminDTO {
     description:
       'Nome usado como identificador do administrador, tal qual QUEM subiu ou alterou os dados',
   })
-  nome: string;
+  NOME: string;
 
   @IsEmail()
   @IsNotEmpty()
@@ -21,7 +27,7 @@ export class AlteraAdminDTO {
     description:
       'Email usado como identificador do administrador, e para Login.',
   })
-  email: string;
+  EMAIL: string;
 
   @IsString()
   @IsNotEmpty()
@@ -34,5 +40,5 @@ export class AlteraAdminDTO {
     example: 'carlosEduardo123',
     description: 'Senha utilizada para fazer login',
   })
-  senha: string;
+  SENHA: string;
 }

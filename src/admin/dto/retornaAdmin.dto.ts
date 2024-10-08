@@ -1,8 +1,8 @@
-import { AdminEntity } from '../admin.entity';
+import { ADMIN } from '../admin.entity';
 
 export class retornaAdminDTO {
   constructor(
     readonly status: string,
-    readonly admin: AdminEntity,
+    readonly admin: ADMIN,
   ) {}
 }

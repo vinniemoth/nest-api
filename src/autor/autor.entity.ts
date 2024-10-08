@@ -1,13 +1,16 @@
-export class AutorEntity{
-    id: string;
-    nome: string;
-    foto: string;
-    quadrinho: string; //momentaneo até a criação do banco de dados
+import { Column, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 
-    constructor(id:string, nome:string, foto:string,quadrinho: string) {
-        this.id = id;
-        this.nome = nome;
-        this.foto = foto;
-        this.quadrinho = quadrinho;
-    }
+export class AUTOR {
+  @PrimaryColumn()
+  ID: string;
+
+  @Column({ length: 255 })
+  NOME: string;
+
+  @Column({ length: 255 })
+  FOTO: string;
+
+  @OneToMany(() => QUADRINHO, (quadrinho) => quadrinho.AUTOR)
+  @JoinColumn({ name: 'ID_QUADRINHO', referencedColumnName: 'ID' })
+  QUADRINHO: string;
 }

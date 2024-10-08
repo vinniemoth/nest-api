@@ -10,7 +10,7 @@ export class CriaAdminDTO {
     description:
       'Nome usado como identificador do administrador, tal qual QUEM subiu ou alterou os dados',
   })
-  nome: string;
+  NOME: string;
 
   @IsEmail()
   @IsNotEmpty()
@@ -19,7 +19,7 @@ export class CriaAdminDTO {
     description:
       'Email usado como identificador do administrador, e para Login.',
   })
-  email: string;
+  EMAIL: string;
 
   @IsString()
   @IsNotEmpty()
@@ -31,5 +31,5 @@ export class CriaAdminDTO {
     example: 'carlosEduardo123',
     description: 'Senha utilizada para fazer login',
   })
-  senha: string;
+  SENHA: string;
 }

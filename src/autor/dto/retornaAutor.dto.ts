@@ -1,8 +1,8 @@
-import { AutorEntity } from '../autor.entity';
+import { AUTOR } from '../autor.entity';
 
 export class RetornaAutorDto {
   constructor(
     readonly status: string,
-    readonly editora: AutorEntity,
+    readonly autor: AUTOR,
   ) {}
 }
