@@ -1,11 +1,8 @@
 import { Controller, Post, Body, Get, Param, Put } from '@nestjs/common';
 import { ADMIN } from './admin.entity';
-import { v4 as uuid } from 'uuid';
 import { CriaAdminDTO } from './dto/criaAdmin.dto';
 import { retornaAdminDTO } from './dto/retornaAdmin.dto';
-import { ListaAdminDTO } from './dto/listaAdmin.dto';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { loginAdminDTO } from './dto/loginAdmin.dto';
+import { ApiTags } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { AlteraAdminDTO } from './dto/alteraAdmin.dto';
 
