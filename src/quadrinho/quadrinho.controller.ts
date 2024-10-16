@@ -1,5 +1,4 @@
-import { Controller, Post, Body, Get, Param, Put } from '@nestjs/common';
-import { quadrinhoArmazenado } from './quadrinho.dm';
+import { Controller, Post, Body, Get, Param, Put, Query } from '@nestjs/common';
 import { CriaQuadrinhoDTO } from './dto/criaQuadrinho.dto';
 import { QuadrinhoEntity } from './quadrinho.entity';
 import { retornaQuadrinhoDto } from './dto/retornaQuadrinho.dto';
@@ -7,17 +6,29 @@ import { listaQuadrinhoDTO } from './dto/listaQuadrinho.dto';
 import { AlteraQuadrinhoDTO } from './dto/alteraQuadrinho.dto';
 import { v4 as uuid } from 'uuid';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { QuadrinhoService } from './quadrinho.service';
 
 @ApiTags('Quadrinhos')
 @Controller('/comics')
 export class QuadrinhoController {
-  constructor(private Quadrinhos: quadrinhoArmazenado) {}
+  constructor(private readonly quadrinhoService: QuadrinhoService) {} //atualizei aqui o nome
 
-  @ApiResponse({status: 201,
-                description: 'Retorna que houve sucesso ao criar o quadrinho',})
-  @ApiResponse({status: 400,
-                description:'Retorna que não foi possível criar o quadrinho. Verifique os dados.'})
+  //Código referente a aba de pesquisa
+  @Get('search-suggestions')
+  async search(@Query('term') term: string): Promise<QuadrinhoEntity[]> {
+    return this.quadrinhoService.search(term);
+  }
+  //----------------------------------
 
+  @ApiResponse({
+    status: 201,
+    description: 'Retorna que houve sucesso ao criar o quadrinho',
+  })
+  @ApiResponse({
+    status: 400,
+    description:
+      'Retorna que não foi possível criar o quadrinho. Verifique os dados.',
+  })
   @Post()
   async criaQuadrinho(@Body() dadosQuadrinho: CriaQuadrinhoDTO) {
     let novoQuadrinho = new QuadrinhoEntity(
@@ -34,11 +45,14 @@ export class QuadrinhoController {
     return retorno;
   }
 
-  @ApiResponse({status: 200,
-                description: 'Retorna que houve sucesso ao encontrar os quadrinhos'})     
-  @ApiResponse({status: 500,
-                description: 'Retorna que não foi possível encontrar os quadrinhos'})
-
+  @ApiResponse({
+    status: 200,
+    description: 'Retorna que houve sucesso ao encontrar os quadrinhos',
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Retorna que não foi possível encontrar os quadrinhos',
+  })
   @Get()
   async retornaQuadrinho() {
     let quadrinhosListados = this.Quadrinhos.Quadrinhos;
@@ -59,10 +73,16 @@ export class QuadrinhoController {
     };
   }
 
-  @ApiResponse({status: 200,
-                description:'Retorna que houve sucesso ao encontrar o quadrinho com determinada id'})
-  @ApiResponse({status: 500,
-                description:'Retorna que não foi possível encontrar o quadrinho com determinada id'})
+  @ApiResponse({
+    status: 200,
+    description:
+      'Retorna que houve sucesso ao encontrar o quadrinho com determinada id',
+  })
+  @ApiResponse({
+    status: 500,
+    description:
+      'Retorna que não foi possível encontrar o quadrinho com determinada id',
+  })
   @Get('/:id')
   async pesquisaId(@Param('id') id: string) {
     let quadrinhosListados = this.Quadrinhos.pesquisaId(id);
@@ -80,10 +100,16 @@ export class QuadrinhoController {
     };
   }
 
-  @ApiResponse({status: 200,
-                description:'Retorna que houve sucesso ao atualizar o quadrinho com determinada id'})              
-  @ApiResponse({status: 500,
-                description:'Retorna que não foi possível atualizar o quadrinho com determinada id'})
+  @ApiResponse({
+    status: 200,
+    description:
+      'Retorna que houve sucesso ao atualizar o quadrinho com determinada id',
+  })
+  @ApiResponse({
+    status: 500,
+    description:
+      'Retorna que não foi possível atualizar o quadrinho com determinada id',
+  })
   @Put('/:id')
   async alteraQuadrinho(
     @Body() dadosNovos: AlteraQuadrinhoDTO,
