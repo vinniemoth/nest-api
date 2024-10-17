@@ -83,20 +83,3 @@ export class AutorController {
   }
 }
 
-//Delete
-// @ApiResponse({
-//   status: 200,
-//   description: 'Retorna que o Autor foi deletado com sucesso',
-// })
-// @ApiResponse({
-//   status: 500,
-//   description:
-//     'Retorna que não foi possível deletar a Autor,favor checar as informações',
-// })
-// @Delete('/:id')
-// async removeFilme(@Param('id') id: string) {
-//   var retornoExclusao = await this.Autores.removeAutor(id);
-//   var retorno = new RetornaAutorDto('Exclusão Efetuada', retornoExclusao);
-//   return retorno;
-// }
-// }

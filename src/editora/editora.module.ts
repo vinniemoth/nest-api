@@ -6,5 +6,6 @@ import { EditoraArmazenada } from './editora.dm';
 @Module({
   controllers: [EditoraController],
   providers: [EditoraArmazenada],
+  providers: [...AutorProvider, AutorService],
 })
 export class EditoraModule {}
