@@ -1,128 +1,70 @@
 import { Controller, Post, Body, Get, Param, Put, Query } from '@nestjs/common';
 import { CriaQuadrinhoDTO } from './dto/criaQuadrinho.dto';
-import { QuadrinhoEntity } from './quadrinho.entity';
-import { retornaQuadrinhoDto } from './dto/retornaQuadrinho.dto';
-import { listaQuadrinhoDTO } from './dto/listaQuadrinho.dto';
 import { AlteraQuadrinhoDTO } from './dto/alteraQuadrinho.dto';
-import { v4 as uuid } from 'uuid';
+import { retornaQuadrinhoDto } from './dto/retornaQuadrinho.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { QuadrinhoService } from './quadrinho.service';
+import { QUADRINHO } from './quadrinho.entity';
 
 @ApiTags('Quadrinhos')
-@Controller('/comics')
+@Controller('quadrinhos')
 export class QuadrinhoController {
-  constructor(private readonly quadrinhoService: QuadrinhoService) {} //atualizei aqui o nome
-
-  //Código referente a aba de pesquisa
-  @Get('search-suggestions')
-  async search(@Query('term') term: string): Promise<QuadrinhoEntity[]> {
-    return this.quadrinhoService.search(term);
-  }
-  //----------------------------------
+  constructor(private readonly quadrinhoService: QuadrinhoService) {}
 
   @ApiResponse({
     status: 201,
-    description: 'Retorna que houve sucesso ao criar o quadrinho',
+    description: 'Quadrinho criado com sucesso',
   })
   @ApiResponse({
     status: 400,
-    description:
-      'Retorna que não foi possível criar o quadrinho. Verifique os dados.',
+    description: 'Não foi possível criar o quadrinho. Verifique os dados.',
   })
   @Post()
-  async criaQuadrinho(@Body() dadosQuadrinho: CriaQuadrinhoDTO) {
-    let novoQuadrinho = new QuadrinhoEntity(
-      uuid(),
-      dadosQuadrinho.edicao,
-      dadosQuadrinho.colecao,
-      dadosQuadrinho.lancamento,
-      dadosQuadrinho.imagemCapa,
-      dadosQuadrinho.editora,
-      dadosQuadrinho.uploadedBy,
-    );
-    this.Quadrinhos.adicionarQuadrinho(novoQuadrinho);
-    let retorno = new retornaQuadrinhoDto('Quadrinho criado', novoQuadrinho);
-    return retorno;
+  async adicionarQuadrinho(
+    @Body() dadosQuadrinho: CriaQuadrinhoDTO,
+  ): Promise<retornaQuadrinhoDto> {
+    return this.quadrinhoService.adicionarQuadrinho(dadosQuadrinho);
   }
 
   @ApiResponse({
     status: 200,
-    description: 'Retorna que houve sucesso ao encontrar os quadrinhos',
+    description: 'Quadrinhos listados com sucesso',
   })
   @ApiResponse({
-    status: 500,
-    description: 'Retorna que não foi possível encontrar os quadrinhos',
+    status: 200,
+    description: 'Erro ao listar os quadrinhos',
   })
-  @Get()
-  async retornaQuadrinho() {
-    let quadrinhosListados = this.Quadrinhos.Quadrinhos;
-    const listaQuadrinhos = quadrinhosListados.map(
-      (quadrinho) =>
-        new listaQuadrinhoDTO(
-          quadrinho.id,
-          quadrinho.edicao,
-          quadrinho.colecao,
-          quadrinho.lancamento,
-          quadrinho.imagemCapa,
-          quadrinho.editora,
-          quadrinho.uploadedBy,
-        ),
-    );
-    return {
-      Quadrinhos: listaQuadrinhos,
-    };
+  @Get('listar')
+  async listar(): Promise<QUADRINHO[]> {
+    return this.quadrinhoService.listar();
   }
 
   @ApiResponse({
     status: 200,
-    description:
-      'Retorna que houve sucesso ao encontrar o quadrinho com determinada id',
+    description: 'Quadrinho encontrado com sucesso',
   })
   @ApiResponse({
-    status: 500,
-    description:
-      'Retorna que não foi possível encontrar o quadrinho com determinada id',
+    status: 200,
+    description: 'Quadrinho não encontrado com o ID fornecido',
   })
-  @Get('/:id')
-  async pesquisaId(@Param('id') id: string) {
-    let quadrinhosListados = this.Quadrinhos.pesquisaId(id);
-    const ListaRetorno = new listaQuadrinhoDTO(
-      quadrinhosListados.id,
-      quadrinhosListados.edicao,
-      quadrinhosListados.colecao,
-      quadrinhosListados.lancamento,
-      quadrinhosListados.imagemCapa,
-      quadrinhosListados.editora,
-      quadrinhosListados.uploadedBy,
-    );
-    return {
-      Quadrinho: ListaRetorno,
-    };
+  @Get('ID-:id')
+  async listarID(@Param('id') id: string): Promise<QUADRINHO> {
+    return this.quadrinhoService.pesquisaId(id);
   }
 
   @ApiResponse({
     status: 200,
-    description:
-      'Retorna que houve sucesso ao atualizar o quadrinho com determinada id',
+    description: 'Quadrinho atualizado com sucesso',
   })
   @ApiResponse({
-    status: 500,
-    description:
-      'Retorna que não foi possível atualizar o quadrinho com determinada id',
+    status: 200,
+    description: 'Não foi possível atualizar o quadrinho. Verifique os dados.',
   })
   @Put('/:id')
   async alteraQuadrinho(
     @Body() dadosNovos: AlteraQuadrinhoDTO,
     @Param('id') id: string,
-  ) {
-    let retornoAlteracao = await this.Quadrinhos.alteraQuadrinho(
-      id,
-      dadosNovos,
-    );
-    let retorno = new retornaQuadrinhoDto(
-      'Quadrinho Alterado',
-      retornoAlteracao,
-    );
-    return retorno;
+  ): Promise<retornaQuadrinhoDto> {
+    return this.quadrinhoService.alterar(id, dadosNovos);
   }
 }

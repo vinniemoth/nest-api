@@ -8,7 +8,7 @@ export class CriaQuadrinhoDTO {
     example: 1,
     description: 'Edição do quadrinho',
   })
-  edicao: number;
+  EDICAO: number;
 
   @IsString()
   @IsNotEmpty({ message: 'Coleção deve ser inserida' })
@@ -16,7 +16,7 @@ export class CriaQuadrinhoDTO {
     example: 'The Avengers',
     description: 'Nome da coleção do quadrinho',
   })
-  colecao: string;
+  COLECAO: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Data de Lançamento deve ser inserida' })
@@ -24,7 +24,7 @@ export class CriaQuadrinhoDTO {
     example: '01/01/2024',
     description: 'Data de lançamento do quadrinho',
   })
-  lancamento: string;
+  LANCAMENTO: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Link de imagem da capa deve ser inserida' })
@@ -32,7 +32,7 @@ export class CriaQuadrinhoDTO {
     example: 'http://www.bancodeimagens.com/the-avengers/01/capa.png',
     description: 'URL da imagem de capa do quadrinho',
   })
-  imagemCapa: string;
+  IMAGEMCAPA: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Nome do enviante deve ser inserida' })
@@ -40,7 +40,7 @@ export class CriaQuadrinhoDTO {
     example: 'Carlos Eduardo',
     description: 'Nome do usuário que enviou as informações do quadrinho',
   })
-  uploadedBy: string;
+  UPLOADED_BY: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Editora deve ser inserida' })
@@ -48,5 +48,13 @@ export class CriaQuadrinhoDTO {
     example: 'Marvel',
     description: 'Editora que publicou o quadrinho',
   })
-  editora: string;
+  EDITORA: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'Autor deve ser inserido' })
+  @ApiProperty({
+    example: 'Stan Lee',
+    description: 'Autor que escreveu o quadrinho',
+  })
+  AUTOR: string;
 }

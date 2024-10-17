@@ -72,6 +72,14 @@ export class AutorService {
       },
     });
   }
+
+  localizarNome(NOME: string): Promise<AUTOR> {
+    return this.autorRepository.findOne({
+      where: {
+        NOME,
+      },
+    });
+  }
   // removeAutor(id: string) {
   //   const autor = this.localizarIDID(id);
   //   this.autores = this.autores.filter((autorSalva) => autorSalva.id !== id);

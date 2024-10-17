@@ -12,7 +12,7 @@ export class quadrinhoArmazenado {
 
   pesquisaId(id: string) {
     const possivelQuadrinho = this.quadrinhos.find(
-      (quadrinhoSalvo) => quadrinhoSalvo.id === id,
+      (quadrinhoSalvo) => quadrinhoSalvo.ID === id,
     );
     if (!possivelQuadrinho) {
       throw new Error('Id de quadrinho não encontrado.');
@@ -37,7 +37,7 @@ export class quadrinhoArmazenado {
   removeQuadrinho(id: string) {
     const quadrinho = this.pesquisaId(id);
     this.quadrinhos = this.quadrinhos.filter(
-      (quadrinhoSalvo) => quadrinhoSalvo.id !== id,
+      (quadrinhoSalvo) => quadrinhoSalvo.ID !== id,
     );
     return quadrinho;
   }

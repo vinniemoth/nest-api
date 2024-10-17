@@ -1,8 +1,8 @@
-import { QuadrinhoEntity } from '../quadrinho.entity';
+import { QUADRINHO } from '../quadrinho.entity';
 
 export class retornaQuadrinhoDto {
   constructor(
     readonly status: string,
-    readonly quadrinho: QuadrinhoEntity,
+    readonly quadrinho: QUADRINHO,
   ) {}
 }

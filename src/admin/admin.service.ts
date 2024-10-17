@@ -74,4 +74,12 @@ export class AdminService {
       },
     });
   }
+
+  localizarNome(NOME: string): Promise<ADMIN> {
+    return this.adminRepository.findOne({
+      where: {
+        NOME,
+      },
+    });
+  }
 }

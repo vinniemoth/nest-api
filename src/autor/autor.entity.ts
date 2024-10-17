@@ -1,3 +1,4 @@
+import { QUADRINHO } from 'src/quadrinho/quadrinho.entity';
 import { Column, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 
 export class AUTOR {

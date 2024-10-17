@@ -1,28 +1,33 @@
-export class QuadrinhoEntity {
-  id: string;
-  edicao: number;
-  colecao: string;
-  lancamento: string;
-  imagemCapa: string;
-  editora: string;
-  uploadedBy: string;
-  // tags:Tag[]
-  constructor(
-    id: string,
-    edicao: number,
-    colecao: string,
-    lancamento: string,
-    imagemCapa: string,
-    editora: string,
-    uploadedBy: string,
-  ) {
-    this.id = id;
-    this.edicao = edicao;
-    this.colecao = colecao;
-    this.lancamento = lancamento;
-    this.imagemCapa = imagemCapa;
-    this.editora = editora;
-    this.uploadedBy = uploadedBy;
-    // this.tags = tags;
-  }
+import { Column, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { EDITORA } from '../editora/editora.entity';
+import { ADMIN } from 'src/admin/admin.entity';
+import { AUTOR } from 'src/autor/autor.entity';
+
+export class QUADRINHO {
+  @PrimaryColumn()
+  ID: string;
+
+  @Column()
+  EDICAO: number;
+
+  @Column()
+  COLECAO: string;
+
+  @Column()
+  LANCAMENTO: string;
+
+  @Column()
+  IMAGEMCAPA: string;
+
+  @ManyToOne(() => EDITORA, (editora) => editora.quadrinho)
+  @JoinColumn({ name: 'ID_QUADRINHO', referencedColumnName: 'ID' })
+  editora: EDITORA;
+
+  @ManyToOne(() => ADMIN, (uploaded_by) => uploaded_by.ID_QUADRINHO)
+  @JoinColumn({ name: 'ID_UPLOADED_BY', referencedColumnName: 'ID' })
+  uploaded_by: ADMIN;
+
+  @ManyToOne(() => AUTOR, (autor) => autor.QUADRINHO)
+  @JoinColumn({ name: 'ID_AUTOR', referencedColumnName: 'ID' })
+  autor: AUTOR;
 }

@@ -3,11 +3,9 @@ import { AdminModule } from './admin/admin.module';
 import { QuadrinhoModule } from './quadrinho/quadrinho.module';
 import { EditoraModule } from './editora/editora.module';
 import { AutorModule } from './autor/autor.module';
-import { UsuarioModule } from './usuario/usuario.module';
-
 
 @Module({
-  imports: [AdminModule, QuadrinhoModule, EditoraModule, AutorModule,UsuarioModule],
+  imports: [AdminModule, QuadrinhoModule, EditoraModule, AutorModule],
   controllers: [],
   providers: [],
 })
