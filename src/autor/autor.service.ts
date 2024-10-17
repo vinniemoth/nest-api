@@ -72,12 +72,4 @@ export class AutorService {
       },
     });
   }
-  // removeAutor(id: string) {
-  //   const autor = this.localizarIDID(id);
-  //   this.autores = this.autores.filter((autorSalva) => autorSalva.id !== id);
-  //   return autor;
-  // }
-  // get Autores() {
-  //   return this.autores;
-  // }
 }

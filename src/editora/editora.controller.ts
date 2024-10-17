@@ -5,41 +5,19 @@ import {
     Param,
     Post, 
     Put, 
-    Delete 
 } from "@nestjs/common";
-import { EditoraArmazenada } from "./editora.dm";
 import { CriaEditoraDTO } from "./dto/criaEditora.dto";
-import { EditoraEntity } from "./editora.entity";
-import { v4 as uuid } from 'uuid';
+
 import { RetornaEditoraDto } from "./dto/retornaEditora.dto";
-import { ListaEditoraDTO } from "./dto/listaEditora.dto";
-import { AlteraEditoraDTO } from "./dto/alteraEditora";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
+import { editoraServise } from "./editora.service";
+import { EDITORA } from "./editora.entity";
+import { AlteraEditoraDTO } from "./dto/alteraEditora";
 
 @ApiTags('Editora')
 @Controller('/editora')
 export class EditoraController {
-    constructor(private Editoras: EditoraArmazenada) { }
-
-        //Criação
-   /*  @ApiResponse({status:201,
-                description:'Retorna que a Edidora foi criada com sucesso'})
-    @ApiResponse({status:400,
-                  description:'Retorna que não foi possível a criação da Editora,favor checar as informações'})
-    
-    @Post()
-        async criaEditora(@Body()dadosEditora: CriaEditoraDTO){
-            let novaEditora = new EditoraEntity(
-                uuid(),
-                dadosEditora.nome,
-                dadosEditora.logo,
-                dadosEditora.quadrinho //momentaneo até a criação do banco de dados
-            );
-            this.Editoras.adcionarEditora(novaEditora);
-            let retorno = new RetornaEditoraDto('Editora Criada',novaEditora);
-            return retorno;
-    }
- */
+    constructor(private readonly Editoras: editoraServise) { }
 
     @ApiResponse({
         status: 201,
@@ -53,7 +31,7 @@ export class EditoraController {
     })
     @Post()
     async criaEditora(@Body() dados: CriaEditoraDTO): Promise<RetornaEditoraDto> {
-        return this.editoraService.inserir(dados);
+        return this.Editoras.inserir(dados);
     }
 
 
@@ -65,24 +43,10 @@ export class EditoraController {
         status: 500,
         description:
         'Retorna que não foi possível encontrar a editora,favor checar as informações'})
-   /*  @Get()
-        async RetornaEditora(){
-            let editorasListadas = this.Editoras.Editoras;
-            const listaEditoras = editorasListadas.map(
-                (editora) => new ListaEditoraDTO(
-                    editora.id,
-                    editora.nome,
-                    editora.logo,
-                    editora.quadrinho
-                )
-            );
-            return{
-                Editoras: listaEditoras
-            };
-        }; */
+
         @Get('listar')
         async listar(): Promise<EDITORA[]> {
-            return this.editoraService.listar();
+            return this.Editoras.listar();
         }
 
         //Pesquisa por ID
@@ -91,49 +55,15 @@ export class EditoraController {
     @ApiResponse({status:500,
                   description:'Retorna que não foi possível encontrar a id da editora,favor checar as informações'})
     
-    @Get('/:id')
-        async pesquisaID(@Param('id') id:string){
-            let editora = this.Editoras.pesquisaID(id);
-            const ListaRetorno = new ListaEditoraDTO(
-                editora.id,
-                editora.nome,
-                editora.logo,
-                editora.quadrinho
-            );
-            return{
-            Editora: ListaRetorno
-        };
-    };
-        //Aleteração
-    @ApiResponse({
-        status:200,
-        description:
-        'Retorna que a Edidora foi alterada com sucesso'})
-    @ApiResponse({
-        status:500,
-        description:
-        'Retorna que não foi possível a alteração da Editora,favor checar as informações'})
-
+    @Get('ID-:id')
+        async pesquisaID(@Param('id') id:string):Promise <EDITORA>{
+         return this.Editoras.localizarID(id)   
+        }
     @Put('/:id')
     async alteraEditora(
-        @Body() dadosNovos: AlteraEditoraDTO,
-        @Param('id') id: string,
-        ): Promise<RetornaEditoraDto>{
-            return this.autorService.alterar(id, dadosNovos);
-        }
+        @Body()dadosNovos:AlteraEditoraDTO,
+        @Param('id') id:string,
+    ):Promise<RetornaEditoraDto>{
+        return this.Editoras.alterar(id,dadosNovos)
+    }
 }
-/* 
-        //Delete
-    @ApiResponse({status:200,
-                  description:'Retorna que a Edidora foi deletada com sucesso'})
-    @ApiResponse({status:500,
-                  description:'Retorna que não foi possível deletar a Editora,favor checar as informações'})
-
-    @Delete('/:id')
-        async removeFilme(@Param('id') id: string){
-            var retornoExclusao = await this.Editoras.removeEditora(id)
-            var retorno = new RetornaEditoraDto ('Exclusão Efetuada',retornoExclusao);        
-            return retorno;
-        }
-
-} */

@@ -1,9 +1,9 @@
 
 export class ListaEditoraDTO{
     constructor(
-        readonly id: string,
-        readonly nome: string,
-        readonly logo: string,
-        readonly quadrinho: string, //momentaneo até a criação do banco de dados
+        readonly ID: string,
+        readonly NOME: string,
+        readonly LOGO: string,
+        readonly QUADRINHO: string, //momentaneo até a criação do banco de dados
     ){}
 }

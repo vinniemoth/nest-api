@@ -19,17 +19,17 @@ import { AlteraEditoraDTO } from './dto/alteraEditora';
           
             async inserir(dados: CriaEditoraDTO): Promise<RetornaEditoraDto> {
               let autor = new EDITORA();
-              editora.ID = uuid();
-              editora.NOME = dados.NOME;
-              editora.LOGO = dados.LOGO;
-              editora.QUADRINHO = dados.QUADRINHO;
+              EDITORA.ID = uuid();
+              EDITORA.NOME = dados.NOME;
+              EDITORA.LOGO = dados.LOGO;
+              EDITORA.QUADRINHO = dados.QUADRINHO;
           
               return this.editoraRepository
-                .save(editora)
+                .save(EDITORA)
                 .then((result) => {
                   return <RetornaEditoraDto>{
                     status: 'Editora Criada',
-                    editora: editora,
+                    editora: EDITORA,
                   };
                 })
                 .catch((error) => {
@@ -55,7 +55,7 @@ import { AlteraEditoraDTO } from './dto/alteraEditora';
                 .then((result) => {
                   return <RetornaEditoraDto>{
                     status: 'Editora Alterado',
-                    editora: Editora,
+                    editora: editora,
                   };
                 })
                 .catch((error) => {

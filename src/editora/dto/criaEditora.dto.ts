@@ -7,19 +7,19 @@ export class CriaEditoraDTO{
     @IsNotEmpty()
     @ApiProperty({example: "Marvel",
                   description: "O nome da editora do quadrinho a ser inserido"})
-    nome: string;
+    NOME: string;
 
     @IsString()
     @IsNotEmpty()
     @ApiProperty({example: "http://www.bancodeimagens.com/the-avengers/01/capa.png",
                   description: "O logotipo da editora do quadrinho a ser inserido"})
-    logo: string;
+    LOGO: string;
 
     //classe quadrinho momentânea só para parar de dar erro
     @IsString()
     @IsNotEmpty()
     @ApiProperty({example: "aaaa",
                   description: "aaaa"})
-    quadrinho: string;
+    QUADRINHO: string;
     /* "Quadrinhos" continuação quando chegar no banco de dados, não usar array por enquanto */
 }

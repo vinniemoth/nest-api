@@ -6,19 +6,19 @@ export class AlteraEditoraDTO{
     @IsOptional()
     @ApiPropertyOptional({example:'DC',
                           description:'alteração do nome da Editora'})
-    nome: string;
+    NOME: string;
     
     @IsString()
     @IsOptional()
     @ApiPropertyOptional({example:"http://www.bancodeimagens.com/the-avengers/01/capa.png",
         description:'Alteração da imagem utilizada pela editora'
     })
-    logo: string;
+    LOGO: string;
 
     @IsString()
     @IsOptional()
     @ApiPropertyOptional({example:1,
         description:'0000'
     })
-    quadrinho: string; //temporario
+    QUADRINHO: string; //temporario
 }
