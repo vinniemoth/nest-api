@@ -41,6 +41,19 @@ export class QuadrinhoController {
 
   @ApiResponse({
     status: 200,
+    description: 'Quadrinhos encontrados com sucesso',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Quadrinhos não encontrados com o nome fornecido',
+  })
+  @Get('resultados-de-busca')
+  async buscarQuadrinho(@Query('nome') nome: string): Promise<QUADRINHO[]> {
+    return this.quadrinhoService.buscarQuadrinho(nome);
+  }
+
+  @ApiResponse({
+    status: 200,
     description: 'Quadrinho encontrado com sucesso',
   })
   @ApiResponse({

@@ -75,6 +75,16 @@ export class QuadrinhoService {
     return quadrinhoEncontrado;
   }
 
+  buscarQuadrinho(nome: string): QUADRINHO[] {
+    const quadrinhosEncontrados = this.quadrinhos.filter(
+      (quad) => quad.COLECAO === nome,
+    );
+    if (quadrinhosEncontrados.length === 0) {
+      throw new NotFoundException(`Quadrinho com nome ${nome} não encontrado`);
+    }
+    return quadrinhosEncontrados;
+  }
+
   // -- UPDATE/PUT --
   // Altera os dados de um quadrinho já existente
   async alterar(
