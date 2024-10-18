@@ -25,7 +25,8 @@ export class CriaAdminDTO {
   @IsNotEmpty()
   @MinLength(6)
   @SenhaForte({
-    message: 'Senha deve ter complexidade maior. Está muito fraca.',
+    message:
+      'Senha deve ter 6 caracteres, letra MAIÚSCULA, minúscula, número e caractere especial.',
   })
   @ApiProperty({
     example: 'carlosEduardo123',

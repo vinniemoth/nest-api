@@ -44,7 +44,7 @@ export class AutorController {
     description:
       'Retorna que não foi possível encontrar o autor,favor checar as informações',
   })
-  @Get('listar')
+  @Get()
   async listar(): Promise<AUTOR[]> {
     return this.autorService.listar();
   }
@@ -74,7 +74,7 @@ export class AutorController {
     description:
       'Retorna que não foi possível a alteração da Autor,favor checar as informações',
   })
-  @Put('/:id')
+  @Put('/ID-:id')
   async alteraAutor(
     @Body() dadosNovos: AlteraAutorDTO,
     @Param('id') id: string,
@@ -82,4 +82,3 @@ export class AutorController {
     return this.autorService.alterar(id, dadosNovos);
   }
 }
-

@@ -1,6 +1,7 @@
 import { QUADRINHO } from 'src/quadrinho/quadrinho.entity';
-import { Column, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 
+@Entity()
 export class AUTOR {
   @PrimaryColumn()
   ID: string;
@@ -11,7 +12,7 @@ export class AUTOR {
   @Column({ length: 255 })
   FOTO: string;
 
-  @OneToMany(() => QUADRINHO, (quadrinho) => quadrinho.AUTOR)
+  @OneToMany(() => QUADRINHO, (quadrinho) => quadrinho.autor)
   @JoinColumn({ name: 'ID_QUADRINHO', referencedColumnName: 'ID' })
-  QUADRINHO: string;
+  quadrinho: QUADRINHO;
 }

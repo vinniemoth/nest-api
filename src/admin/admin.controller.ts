@@ -16,7 +16,7 @@ export class AdminController {
     return this.adminService.inserir(dados);
   }
 
-  @Get('listar')
+  @Get()
   async listar(): Promise<ADMIN[]> {
     return this.adminService.listar();
   }
@@ -26,65 +26,11 @@ export class AdminController {
     return this.adminService.localizarID(id);
   }
 
-  @Put(':id')
+  @Put('ID-:id')
   async alterarAdmin(
     @Body() dados: AlteraAdminDTO,
     @Param('id') id: string,
   ): Promise<retornaAdminDTO> {
     return this.adminService.alterar(id, dados);
   }
-
-  // ** Criação do admin **
-  // @ApiResponse({
-  //   status: 201,
-  //   description: 'Retorna que o admin foi criado com sucesso.',
-  // })
-  // @ApiResponse({
-  //   status: 400,
-  //   description: 'Retorna que houve erro ao criar admin. Verifique os dados.',
-  // })
-  // @Post()
-  // async criaAdmin(@Body() dadosAdmin: CriaAdminDTO) {
-  // let novoAdmin = new Admin(
-  //   uuid(),
-  //   dadosAdmin.nome,
-  //   dadosAdmin.email,
-  //   dadosAdmin.senha,
-  // );
-  // this.adminService.adicionarAdmin(novoAdmin);
-  // let retorno = new retornaAdminDTO('Admin Criado', novoAdmin);
-  // return retorno;
-  // }
-
-  // ** Login do Admin **
-  // @Post('/login')
-  // async fazerLogin(@Body() dadosLogin: loginAdminDTO) {
-  // let retornoLogin = this.Admins.loginAdmin(
-  //   dadosLogin.email,
-  //   dadosLogin.senha,
-  // );
-  // let retorno = new retornaAdminDTO(
-  //   retornoLogin.status ? 'Login efetuado' : 'Email ou senha inválidos',
-  //   retornoLogin.usuario,
-  // );
-  // return retorno;
 }
-
-// ** Retorno de Admin **
-//   @ApiResponse({
-//     status: 200,
-//     description: 'Retorna que houve sucesso ao encontrar os admins',
-//   })
-//   @ApiResponse({
-//     status: 500,
-//     description: 'Retorna que não houve sucesso ao encontrar os admins',
-//   })
-//   @Get()
-//   async retornaAdmin() {
-//     let adminsListados = this.adminService;
-//     const listaAdmins = adminsListados.map(
-//       (admins) => new ListaAdminDTO(admins.id, admins.nome, admins.email),
-//     );
-//     return { admins: listaAdmins };
-//   }
-// }

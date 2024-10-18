@@ -34,7 +34,7 @@ export class QuadrinhoController {
     status: 200,
     description: 'Erro ao listar os quadrinhos',
   })
-  @Get('listar')
+  @Get()
   async listar(): Promise<QUADRINHO[]> {
     return this.quadrinhoService.listar();
   }
@@ -60,7 +60,7 @@ export class QuadrinhoController {
     status: 200,
     description: 'Não foi possível atualizar o quadrinho. Verifique os dados.',
   })
-  @Put('/:id')
+  @Put('ID-:id')
   async alteraQuadrinho(
     @Body() dadosNovos: AlteraQuadrinhoDTO,
     @Param('id') id: string,

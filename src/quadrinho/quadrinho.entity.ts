@@ -1,8 +1,9 @@
-import { Column, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { EDITORA } from '../editora/editora.entity';
 import { ADMIN } from 'src/admin/admin.entity';
 import { AUTOR } from 'src/autor/autor.entity';
 
+@Entity()
 export class QUADRINHO {
   @PrimaryColumn()
   ID: string;
@@ -17,7 +18,7 @@ export class QUADRINHO {
   LANCAMENTO: string;
 
   @Column()
-  IMAGEMCAPA: string;
+  IMAGEM_CAPA: string;
 
   @ManyToOne(() => EDITORA, (editora) => editora.quadrinho)
   @JoinColumn({ name: 'ID_QUADRINHO', referencedColumnName: 'ID' })
@@ -27,7 +28,7 @@ export class QUADRINHO {
   @JoinColumn({ name: 'ID_UPLOADED_BY', referencedColumnName: 'ID' })
   uploaded_by: ADMIN;
 
-  @ManyToOne(() => AUTOR, (autor) => autor.QUADRINHO)
+  @ManyToOne(() => AUTOR, (autor) => autor.quadrinho)
   @JoinColumn({ name: 'ID_AUTOR', referencedColumnName: 'ID' })
   autor: AUTOR;
 }

@@ -32,7 +32,7 @@ export class CriaQuadrinhoDTO {
     example: 'http://www.bancodeimagens.com/the-avengers/01/capa.png',
     description: 'URL da imagem de capa do quadrinho',
   })
-  IMAGEMCAPA: string;
+  IMAGEM_CAPA: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Nome do enviante deve ser inserida' })

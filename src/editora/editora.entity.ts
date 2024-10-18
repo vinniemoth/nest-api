@@ -1,5 +1,7 @@
-import { Column, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
+import { QUADRINHO } from 'src/quadrinho/quadrinho.entity';
 
+@Entity()
 export class EDITORA {
   @PrimaryColumn()
   ID: string;
@@ -10,15 +12,10 @@ export class EDITORA {
   @Column({ length: 255 })
   LOGO: string;
 
-  @OneToMany(() => QUADRINHO, (quadrinho) => quadrinho.AUTOR)
+  @OneToMany(() => QUADRINHO, (quadrinho) => quadrinho.autor)
   @JoinColumn({ name: 'ID_QUADRINHO', referencedColumnName: 'ID' })
-  QUADRINHO: string;
-  static QUADRINHO: any;
-  static LOGO: any;
-  static NOME: any;
-  static ID: any;
+  quadrinho: QUADRINHO;
 }
-
 
 /* export class EditoraEntity{
     id: string;

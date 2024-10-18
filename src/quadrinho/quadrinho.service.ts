@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QUADRINHO } from './quadrinho.entity';
 import { Like, Repository } from 'typeorm';
@@ -14,7 +14,7 @@ import { AdminService } from 'src/admin/admin.service';
 export class QuadrinhoService {
   constructor(
     //Código referente a aba de pesquisa
-    @InjectRepository(QUADRINHO)
+    @Inject('QUADRINHO_REPOSITORY')
     private quadrinhoRepository: Repository<QUADRINHO>,
     private readonly autorService: AutorService,
     private readonly adminService: AdminService,
@@ -38,7 +38,7 @@ export class QuadrinhoService {
     quadrinho.ID = uuid();
     quadrinho.COLECAO = dados.COLECAO;
     quadrinho.EDICAO = dados.EDICAO;
-    quadrinho.IMAGEMCAPA = dados.IMAGEMCAPA;
+    quadrinho.IMAGEM_CAPA = dados.IMAGEM_CAPA;
     quadrinho.LANCAMENTO = dados.LANCAMENTO;
     quadrinho.autor = await this.autorService.localizarNome(dados.AUTOR);
     quadrinho.uploaded_by = await this.adminService.localizarNome(
@@ -104,5 +104,13 @@ export class QuadrinhoService {
           quadrinho: error,
         };
       });
+  }
+
+  localizarColecao(COLECAO: string): Promise<QUADRINHO> {
+    return this.quadrinhoRepository.findOne({
+      where: {
+        COLECAO,
+      },
+    });
   }
 }

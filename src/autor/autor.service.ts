@@ -22,7 +22,6 @@ export class AutorService {
     autor.ID = uuid();
     autor.NOME = dados.NOME;
     autor.FOTO = dados.FOTO;
-    autor.QUADRINHO = dados.QUADRINHO;
 
     return this.autorRepository
       .save(autor)
@@ -80,12 +79,4 @@ export class AutorService {
       },
     });
   }
-  // removeAutor(id: string) {
-  //   const autor = this.localizarIDID(id);
-  //   this.autores = this.autores.filter((autorSalva) => autorSalva.id !== id);
-  //   return autor;
-  // }
-  // get Autores() {
-  //   return this.autores;
-  // }
 }
