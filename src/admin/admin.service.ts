@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid';
 import { CriaAdminDTO } from './dto/criaAdmin.dto';
 import { retornaAdminDTO } from './dto/retornaAdmin.dto';
 import { AlteraAdminDTO } from './dto/alteraAdmin.dto';
+import { loginAdminDTO } from './dto/loginAdmin.dto';
 
 @Injectable()
 export class AdminService {
@@ -38,6 +39,18 @@ export class AdminService {
           admin: error,
         };
       });
+  }
+
+  async login(dados: loginAdminDTO): Promise<{ success: boolean }> {
+    const { EMAIL, SENHA } = dados;
+    const admin = await this.adminRepository.findOne({
+      where: { EMAIL: EMAIL, SENHA: SENHA },
+    });
+
+    if (!admin) {
+      throw new Error('Admin não encontrado');
+    }
+    return { success: true };
   }
 
   async alterar(Id: string, dados: AlteraAdminDTO): Promise<retornaAdminDTO> {
