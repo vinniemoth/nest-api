@@ -1,4 +1,13 @@
-import { Controller, Post, Body, Get, Param, Put, Query } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Put,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { CriaQuadrinhoDTO } from './dto/criaQuadrinho.dto';
 import { AlteraQuadrinhoDTO } from './dto/alteraQuadrinho.dto';
 import { retornaQuadrinhoDto } from './dto/retornaQuadrinho.dto';
@@ -48,8 +57,18 @@ export class QuadrinhoController {
     description: 'Quadrinhos não encontrados com o nome fornecido',
   })
   @Get('resultados-de-busca')
-  async buscarQuadrinho(@Query('nome') nome: string): Promise<QUADRINHO[]> {
-    return this.quadrinhoService.buscarQuadrinho(nome);
+  async buscarQuadrinho(
+    @Query('nome') nome: string,
+    @Res() res,
+  ): Promise<void> {
+    try {
+      const quadrinhos = await this.quadrinhoService.buscarQuadrinho(nome);
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json(quadrinhos);
+    } catch (error) {
+      console.error('Erro ao buscar quadrinhos', error);
+      res.status(500).send('Erro ao buscar quadrinhos');
+    }
   }
 
   @ApiResponse({
