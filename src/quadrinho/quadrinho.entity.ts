@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { EDITORA } from '../editora/editora.entity';
 import { ADMIN } from 'src/admin/admin.entity';
 import { AUTOR } from 'src/autor/autor.entity';
+import { COLECAO } from 'src/colecao/colecao.entity';
 
 @Entity()
 export class QUADRINHO {
@@ -11,8 +12,9 @@ export class QUADRINHO {
   @Column()
   EDICAO: number;
 
-  @Column()
-  COLECAO: string;
+  @ManyToOne(() => COLECAO, (colecao) => colecao.quadrinho)
+  @JoinColumn({ name: 'ID_COLECAO', referencedColumnName: 'ID' })
+  colecao: COLECAO;
 
   @Column()
   LANCAMENTO: string;
