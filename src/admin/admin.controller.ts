@@ -5,6 +5,7 @@ import { retornaAdminDTO } from './dto/retornaAdmin.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { AlteraAdminDTO } from './dto/alteraAdmin.dto';
+import { loginAdminDTO } from './dto/loginAdmin.dto';
 
 @ApiTags('Usuários')
 @Controller('/admin')
@@ -14,6 +15,11 @@ export class AdminController {
   @Post()
   async criaAdmin(@Body() dados: CriaAdminDTO): Promise<retornaAdminDTO> {
     return this.adminService.inserir(dados);
+  }
+
+  @Post('login')
+  async login(@Body() dados: loginAdminDTO): Promise<{ success: boolean }> {
+    return this.adminService.login(dados);
   }
 
   @Get()

@@ -14,25 +14,23 @@ import { ColecaoService } from 'src/colecao/colecao.service';
 @Injectable()
 export class QuadrinhoService {
   constructor(
-    //Código referente a aba de pesquisa
     @Inject('QUADRINHO_REPOSITORY')
     private quadrinhoRepository: Repository<QUADRINHO>,
     private readonly colecaoService: ColecaoService,
     private readonly autorService: AutorService,
     private readonly adminService: AdminService,
   ) {}
+
   async search(term: string): Promise<QUADRINHO[]> {
     return this.quadrinhoRepository.find({
-      where: { colecao: Like(`%${term}%}`) },
+      where: { COLECAO: Like(`%${term}%`) },
     });
   }
+
   async listar(): Promise<QUADRINHO[]> {
     return this.quadrinhoRepository.find();
   }
-  private quadrinhos: QUADRINHO[] = [];
 
-  // Adiciona um novo quadrinho à lista
-  // -- POST --
   async adicionarQuadrinho(
     dados: CriaQuadrinhoDTO,
   ): Promise<retornaQuadrinhoDto> {
@@ -46,6 +44,7 @@ export class QuadrinhoService {
     quadrinho.uploaded_by = await this.adminService.localizarNome(
       dados.UPLOADED_BY,
     );
+
     return this.quadrinhoRepository
       .save(quadrinho)
       .then((result) => {
@@ -62,15 +61,10 @@ export class QuadrinhoService {
       });
   }
 
-  // Retorna todos os quadrinhos armazenados
-  get Quadrinhos(): QUADRINHO[] {
-    return this.quadrinhos;
-  }
-
-  // Pesquisa um quadrinho pelo ID
-  // -- GET --
-  pesquisaId(id: string): QUADRINHO {
-    const quadrinhoEncontrado = this.quadrinhos.find((quad) => quad.ID === id);
+  async pesquisaId(id: string): Promise<QUADRINHO> {
+    const quadrinhoEncontrado = await this.quadrinhoRepository.findOne({
+      where: { ID: id },
+    });
     if (!quadrinhoEncontrado) {
       throw new NotFoundException(`Quadrinho com ID ${id} não encontrado`);
     }
@@ -79,7 +73,7 @@ export class QuadrinhoService {
 
   buscarQuadrinho(nome: string): QUADRINHO[] {
     const quadrinhosEncontrados = this.quadrinhos.filter(
-      (quad) => quad.colecao.NOME === nome,
+      (quad) => quad.COLECAO === nome,
     );
     if (quadrinhosEncontrados.length === 0) {
       throw new NotFoundException(`Quadrinho com nome ${nome} não encontrado`);
@@ -94,7 +88,6 @@ export class QuadrinhoService {
     dados: AlteraQuadrinhoDTO,
   ): Promise<retornaQuadrinhoDto> {
     const quadrinho = await this.pesquisaId(id);
-
     Object.entries(dados).forEach(([chave, valor]) => {
       if (chave === 'id') {
         return;
@@ -121,11 +114,8 @@ export class QuadrinhoService {
   localizarColecao(COLECAO: string): Promise<QUADRINHO> {
     return this.quadrinhoRepository.findOne({
       where: {
-        colecao: {
-          NOME: COLECAO,
-        },
+        COLECAO,
       },
-      relations: ['colecao'],
     });
   }
 }

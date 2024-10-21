@@ -1,11 +1,9 @@
-import { IsEmail, MinLength } from "class-validator";
+import { IsEmail, MinLength } from 'class-validator';
 
-export class loginAdminDTO{
+export class loginAdminDTO {
+  @IsEmail(undefined, { message: 'Email inválido' })
+  EMAIL: string;
 
-    @IsEmail(undefined,{message:"Email inválido"})
-    email:string;
-
-    @MinLength(8,{message:"Senha deve ter no minimo 8 caracteres."})
-    senha:string;
-    
+  @MinLength(8, { message: 'Senha inválida' })
+  SENHA: string;
 }

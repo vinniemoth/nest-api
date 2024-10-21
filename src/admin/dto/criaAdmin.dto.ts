@@ -24,10 +24,10 @@ export class CriaAdminDTO {
   @IsString()
   @IsNotEmpty()
   @MinLength(6)
-  @SenhaForte({
-    message:
-      'Senha deve ter 6 caracteres, letra MAIÚSCULA, minúscula, número e caractere especial.',
-  })
+  // @SenhaForte({
+  //   message:
+  //     'Senha deve ter 6 caracteres, letra MAIÚSCULA, minúscula, número e caractere especial.',
+  // })
   @ApiProperty({
     example: 'carlosEduardo123',
     description: 'Senha utilizada para fazer login',
