@@ -10,6 +10,7 @@ import { CriaQuadrinhoDTO } from './dto/criaQuadrinho.dto';
 import { AutorService } from 'src/autor/autor.service';
 import { AdminService } from 'src/admin/admin.service';
 import { ColecaoService } from 'src/colecao/colecao.service';
+import { EditoraService } from 'src/editora/editora.service';
 
 @Injectable()
 export class QuadrinhoService {
@@ -19,6 +20,7 @@ export class QuadrinhoService {
     private readonly colecaoService: ColecaoService,
     private readonly autorService: AutorService,
     private readonly adminService: AdminService,
+    private readonly editoraService: EditoraService,
   ) {}
 
   async search(term: string): Promise<QUADRINHO[]> {
@@ -44,6 +46,7 @@ export class QuadrinhoService {
     quadrinho.uploaded_by = await this.adminService.localizarNome(
       dados.UPLOADED_BY,
     );
+    quadrinho.editora = await this.editoraService.localizarNome(dados.EDITORA);
 
     return this.quadrinhoRepository
       .save(quadrinho)

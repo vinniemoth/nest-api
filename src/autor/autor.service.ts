@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { AUTOR } from './autor.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CriaAutorDTO } from './dto/criaAutor.dto';
 import { RetornaAutorDto } from './dto/retornaAutor.dto';
 import { AlteraAutorDTO } from './dto/alteraAutor';
@@ -78,5 +78,14 @@ export class AutorService {
         NOME,
       },
     });
+  }
+  async buscarAutor(nome: string): Promise<AUTOR[]> {
+    const autoresEncontrados = await this.autorRepository.find({
+      where: { NOME: Like(`%${nome}%`) },
+    });
+    if (autoresEncontrados.length === 0) {
+      throw new NotFoundException(`Admin de nome ${nome} não encontrada`);
+    }
+    return autoresEncontrados;
   }
 }

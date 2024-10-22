@@ -1,16 +1,18 @@
 import { v4 as uuid } from 'uuid';
-import { Inject, Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Like, Repository } from 'typeorm';
 import { CriaColecaoDto } from './dto/criaColecao.dto';
 import { AlteraColecaoDTO } from './dto/alteraColecao.dto';
 import { RetornaColecaoDto } from './dto/retornaColecao.dto';
 import { COLECAO } from './colecao.entity';
+import { EditoraService } from 'src/editora/editora.service';
 
 @Injectable()
 export class ColecaoService {
   constructor(
     @Inject('COLECAO_REPOSITORY')
     private readonly colecaoRepository: Repository<COLECAO>,
+    private editoraService: EditoraService,
   ) {}
 
   async listar(): Promise<COLECAO[]> {
@@ -24,7 +26,7 @@ export class ColecaoService {
     colecao.LANCAMENTO = dados.LANCAMENTO;
     colecao.FOTO = dados.FOTO;
     colecao.SINOPSE = dados.SINOPSE;
-
+    colecao.editora = await this.editoraService.localizarNome(dados.EDITORA);
     return this.colecaoRepository
       .save(colecao)
       .then((result) => {
@@ -46,14 +48,12 @@ export class ColecaoService {
     dados: AlteraColecaoDTO,
   ): Promise<RetornaColecaoDto> {
     const colecao = await this.localizarID(id);
-
     Object.entries(dados).forEach(([chave, valor]) => {
       if (chave === 'id') {
         return;
       }
       colecao[chave] = valor;
     });
-
     return this.colecaoRepository
       .save(colecao)
       .then((result) => {
@@ -69,19 +69,26 @@ export class ColecaoService {
         };
       });
   }
+
   localizarID(ID: string): Promise<COLECAO> {
     return this.colecaoRepository.findOne({
-      where: {
-        ID,
-      },
+      where: { ID },
     });
   }
 
   localizarNome(NOME: string): Promise<COLECAO> {
     return this.colecaoRepository.findOne({
-      where: {
-        NOME,
-      },
+      where: { NOME },
     });
+  }
+
+  async buscarColecao(nome: string): Promise<COLECAO[]> {
+    const colecoesEncontradas = await this.colecaoRepository.find({
+      where: { NOME: Like(`%${nome}%`) },
+    });
+    if (colecoesEncontradas.length === 0) {
+      throw new NotFoundException(`Coleção com nome ${nome} não encontrada`);
+    }
+    return colecoesEncontradas;
   }
 }

@@ -34,4 +34,11 @@ export class CriaColecaoDto {
     description: 'Sinopse de determinada coleção',
   })
   SINOPSE: string;
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 'Marvel',
+    description: 'Editora de determinada coleção',
+  })
+  EDITORA: string;
 }

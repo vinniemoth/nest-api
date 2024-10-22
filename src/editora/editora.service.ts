@@ -1,13 +1,13 @@
 import { v4 as uuid } from 'uuid';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { EDITORA } from './editora.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CriaEditoraDTO } from './dto/criaEditora.dto';
 import { RetornaEditoraDto } from './dto/retornaEditora.dto';
 import { AlteraEditoraDTO } from './dto/alteraEditora';
 
 @Injectable()
-export class editoraService {
+export class EditoraService {
   constructor(
     @Inject('EDITORA_REPOSITORY')
     private readonly editoraRepository: Repository<EDITORA>,
@@ -74,5 +74,22 @@ export class editoraService {
         ID,
       },
     });
+  }
+
+  localizarNome(NOME: string): Promise<EDITORA> {
+    return this.editoraRepository.findOne({
+      where: {
+        NOME,
+      },
+    });
+  }
+  async buscarEditora(nome: string): Promise<EDITORA[]> {
+    const editorasEncontradas = await this.editoraRepository.find({
+      where: { NOME: Like(`%${nome}%`) },
+    });
+    if (editorasEncontradas.length === 0) {
+      throw new NotFoundException(`Admin de nome ${nome} não encontrada`);
+    }
+    return editorasEncontradas;
   }
 }

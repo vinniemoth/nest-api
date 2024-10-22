@@ -1,16 +1,16 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CriaEditoraDTO } from './dto/criaEditora.dto';
 
 import { RetornaEditoraDto } from './dto/retornaEditora.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { editoraService } from './editora.service';
+import { EditoraService } from './editora.service';
 import { EDITORA } from './editora.entity';
 import { AlteraEditoraDTO } from './dto/alteraEditora';
 
 @ApiTags('Editora')
 @Controller('/editora')
 export class EditoraController {
-  constructor(private readonly Editoras: editoraService) {}
+  constructor(private readonly editoraService: EditoraService) {}
 
   @ApiResponse({
     status: 201,
@@ -23,7 +23,7 @@ export class EditoraController {
   })
   @Post()
   async criaEditora(@Body() dados: CriaEditoraDTO): Promise<RetornaEditoraDto> {
-    return this.Editoras.inserir(dados);
+    return this.editoraService.inserir(dados);
   }
 
   //Pesquisa
@@ -38,7 +38,7 @@ export class EditoraController {
   })
   @Get()
   async listar(): Promise<EDITORA[]> {
-    return this.Editoras.listar();
+    return this.editoraService.listar();
   }
 
   //Pesquisa por ID
@@ -54,13 +54,18 @@ export class EditoraController {
   })
   @Get('ID-:id')
   async pesquisaID(@Param('id') id: string): Promise<EDITORA> {
-    return this.Editoras.localizarID(id);
+    return this.editoraService.localizarID(id);
   }
   @Put('ID-:id')
   async alteraEditora(
     @Body() dadosNovos: AlteraEditoraDTO,
     @Param('id') id: string,
   ): Promise<RetornaEditoraDto> {
-    return this.Editoras.alterar(id, dadosNovos);
+    return this.editoraService.alterar(id, dadosNovos);
+  }
+  // Resultados de busca
+  @Get('resultados-de-busca')
+  async buscarEditora(@Query('nome') nome: string): Promise<EDITORA[]> {
+    return this.editoraService.buscarEditora(nome);
   }
 }

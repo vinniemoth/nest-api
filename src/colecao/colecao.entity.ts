@@ -1,5 +1,6 @@
 import { EDITORA } from 'src/editora/editora.entity';
 import { QUADRINHO } from 'src/quadrinho/quadrinho.entity';
+import { v4 as uuid } from 'uuid';
 import {
   Column,
   Entity,
@@ -23,7 +24,7 @@ export class COLECAO {
   @Column()
   FOTO: string;
 
-  @Column()
+  @Column('text')
   SINOPSE: string;
 
   @ManyToOne(() => EDITORA, (editora) => editora.colecao)
@@ -31,6 +32,5 @@ export class COLECAO {
   editora: EDITORA;
 
   @OneToMany(() => QUADRINHO, (quadrinho) => quadrinho.colecao)
-  @JoinColumn({ name: 'ID_QUADRINHO', referencedColumnName: 'ID' })
-  quadrinho: QUADRINHO;
+  quadrinho: QUADRINHO[];
 }

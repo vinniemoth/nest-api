@@ -6,6 +6,7 @@ import {
   Post,
   Put,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { AutorService } from './autor.service';
 import { CriaAutorDTO } from './dto/criaAutor.dto';
@@ -80,5 +81,10 @@ export class AutorController {
     @Param('id') id: string,
   ): Promise<RetornaAutorDto> {
     return this.autorService.alterar(id, dadosNovos);
+  }
+  // Resultados de busca
+  @Get('resultados-de-busca')
+  async buscarColecao(@Query('nome') nome: string): Promise<AUTOR[]> {
+    return this.autorService.buscarAutor(nome);
   }
 }

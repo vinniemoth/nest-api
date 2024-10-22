@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, Put } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Put, Query } from '@nestjs/common';
 import { ADMIN } from './admin.entity';
 import { CriaAdminDTO } from './dto/criaAdmin.dto';
 import { retornaAdminDTO } from './dto/retornaAdmin.dto';
@@ -25,6 +25,11 @@ export class AdminController {
   @Get()
   async listar(): Promise<ADMIN[]> {
     return this.adminService.listar();
+  }
+
+  @Get('resultados-de-busca')
+  async buscarAdmin(@Query('nome') nome: string): Promise<ADMIN[]> {
+    return this.adminService.buscarAdmin(nome);
   }
 
   @Get('ID-:id')

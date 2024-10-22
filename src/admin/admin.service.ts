@@ -1,5 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Like, Repository } from 'typeorm';
 import { ADMIN } from './admin.entity';
 import { v4 as uuid } from 'uuid';
 import { CriaAdminDTO } from './dto/criaAdmin.dto';
@@ -94,5 +94,14 @@ export class AdminService {
         NOME,
       },
     });
+  }
+  async buscarAdmin(nome: string): Promise<ADMIN[]> {
+    const adminsEncontrados = await this.adminRepository.find({
+      where: { NOME: Like(`%${nome}%`) },
+    });
+    if (adminsEncontrados.length === 0) {
+      throw new NotFoundException(`Admin de nome ${nome} não encontrada`);
+    }
+    return adminsEncontrados;
   }
 }

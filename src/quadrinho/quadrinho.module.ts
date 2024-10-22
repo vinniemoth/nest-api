@@ -9,6 +9,8 @@ import { AutorProvider } from 'src/autor/autor.provider';
 import { adminProviders } from 'src/admin/admin.providers';
 import { ColecaoProvider } from 'src/colecao/colecao.provider';
 import { ColecaoService } from 'src/colecao/colecao.service';
+import { EditoraProvider } from 'src/editora/editora.provider';
+import { EditoraService } from 'src/editora/editora.service';
 
 @Module({
   imports: [DatabaseModule],
@@ -22,6 +24,8 @@ import { ColecaoService } from 'src/colecao/colecao.service';
     AdminService,
     ...ColecaoProvider,
     ColecaoService,
+    ...EditoraProvider,
+    EditoraService,
   ],
 })
 export class QuadrinhoModule {}

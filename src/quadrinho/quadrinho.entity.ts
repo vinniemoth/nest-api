@@ -23,7 +23,7 @@ export class QUADRINHO {
   IMAGEM_CAPA: string;
 
   @ManyToOne(() => EDITORA, (editora) => editora.quadrinho)
-  @JoinColumn({ name: 'ID_QUADRINHO', referencedColumnName: 'ID' })
+  @JoinColumn({ name: 'ID_EDITORA', referencedColumnName: 'ID' })
   editora: EDITORA;
 
   @ManyToOne(() => ADMIN, (uploaded_by) => uploaded_by.ID_QUADRINHO)
