@@ -7,7 +7,7 @@ import { RetornaColecaoDto } from './dto/retornaColecao.dto';
 import { AlteraColecaoDTO } from './dto/alteraColecao.dto';
 
 @ApiTags('Coleção')
-@Controller('/colecao')
+@Controller('colecao')
 export class ColecaoController {
   constructor(private readonly colecaoService: ColecaoService) {}
 
