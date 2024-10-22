@@ -23,7 +23,7 @@ export class QuadrinhoService {
 
   async search(term: string): Promise<QUADRINHO[]> {
     return this.quadrinhoRepository.find({
-      where: { COLECAO: Like(`%${term}%`) },
+      where: { colecao: Like(`%${term}%`) },
     });
   }
 
@@ -71,10 +71,15 @@ export class QuadrinhoService {
     return quadrinhoEncontrado;
   }
 
-  buscarQuadrinho(nome: string): QUADRINHO[] {
-    const quadrinhosEncontrados = this.quadrinhos.filter(
-      (quad) => quad.COLECAO === nome,
-    );
+  async buscarQuadrinho(nome: string): Promise<QUADRINHO[]> {
+    const quadrinhosEncontrados = await this.quadrinhoRepository.find({
+      relations: ['colecao'],
+      where: {
+        colecao: {
+          NOME: nome,
+        },
+      },
+    });
     if (quadrinhosEncontrados.length === 0) {
       throw new NotFoundException(`Quadrinho com nome ${nome} não encontrado`);
     }
@@ -111,10 +116,12 @@ export class QuadrinhoService {
       });
   }
 
-  localizarColecao(COLECAO: string): Promise<QUADRINHO> {
+  localizarColecao(colecao: string): Promise<QUADRINHO> {
     return this.quadrinhoRepository.findOne({
       where: {
-        COLECAO,
+        colecao: {
+          NOME: colecao,
+        },
       },
     });
   }
