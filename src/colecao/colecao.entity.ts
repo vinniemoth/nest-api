@@ -1,6 +1,5 @@
 import { EDITORA } from 'src/editora/editora.entity';
 import { QUADRINHO } from 'src/quadrinho/quadrinho.entity';
-import { v4 as uuid } from 'uuid';
 import {
   Column,
   Entity,

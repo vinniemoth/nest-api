@@ -6,6 +6,8 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EditoraService } from './editora.service';
 import { EDITORA } from './editora.entity';
 import { AlteraEditoraDTO } from './dto/alteraEditora';
+import { COLECAO } from 'src/colecao/colecao.entity';
+import { ColecaoService } from 'src/colecao/colecao.service';
 
 @ApiTags('Editora')
 @Controller('/editora')
@@ -52,9 +54,11 @@ export class EditoraController {
     description:
       'Retorna que não foi possível encontrar a id da editora,favor checar as informações',
   })
-  @Get('ID-:id')
-  async pesquisaID(@Param('id') id: string): Promise<EDITORA> {
-    return this.editoraService.localizarID(id);
+  @Get('ID-:nomeEditora')
+  async pesquisaNome(
+    @Param('nomeEditora') nomeEditora: string,
+  ): Promise<EDITORA> {
+    return this.editoraService.localizarNome(nomeEditora);
   }
   @Put('ID-:id')
   async alteraEditora(

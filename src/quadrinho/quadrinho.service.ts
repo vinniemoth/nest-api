@@ -41,6 +41,7 @@ export class QuadrinhoService {
     quadrinho.colecao = await this.colecaoService.localizarNome(dados.COLECAO);
     quadrinho.EDICAO = dados.EDICAO;
     quadrinho.IMAGEM_CAPA = dados.IMAGEM_CAPA;
+    quadrinho.SINOPSE = dados.SINOPSE;
     quadrinho.LANCAMENTO = dados.LANCAMENTO;
     quadrinho.autor = await this.autorService.localizarNome(dados.AUTOR);
     quadrinho.uploaded_by = await this.adminService.localizarNome(
@@ -67,6 +68,7 @@ export class QuadrinhoService {
   async pesquisaId(id: string): Promise<QUADRINHO> {
     const quadrinhoEncontrado = await this.quadrinhoRepository.findOne({
       where: { ID: id },
+      relations: ['colecao', 'editora', 'autor'],
     });
     if (!quadrinhoEncontrado) {
       throw new NotFoundException(`Quadrinho com ID ${id} não encontrado`);
@@ -119,13 +121,14 @@ export class QuadrinhoService {
       });
   }
 
-  localizarColecao(colecao: string): Promise<QUADRINHO> {
-    return this.quadrinhoRepository.findOne({
+  async findByColecao(nomeColecao: string): Promise<QUADRINHO[]> {
+    return await this.quadrinhoRepository.find({
       where: {
         colecao: {
-          NOME: colecao,
+          NOME: nomeColecao,
         },
       },
+      relations: ['colecao'],
     });
   }
 }

@@ -5,6 +5,7 @@ import { Like, Repository } from 'typeorm';
 import { CriaEditoraDTO } from './dto/criaEditora.dto';
 import { RetornaEditoraDto } from './dto/retornaEditora.dto';
 import { AlteraEditoraDTO } from './dto/alteraEditora';
+import { COLECAO } from 'src/colecao/colecao.entity';
 
 @Injectable()
 export class EditoraService {
@@ -83,6 +84,7 @@ export class EditoraService {
       },
     });
   }
+
   async buscarEditora(nome: string): Promise<EDITORA[]> {
     const editorasEncontradas = await this.editoraRepository.find({
       where: { NOME: Like(`%${nome}%`) },

@@ -35,6 +35,14 @@ export class CriaQuadrinhoDTO {
   IMAGEM_CAPA: string;
 
   @IsString()
+  @IsNotEmpty({ message: 'Sinopse deve ser inserida' })
+  @ApiProperty({
+    example: 'lorem ipsun blablabla',
+    description: 'Sinopse do quadrinho',
+  })
+  SINOPSE: string;
+
+  @IsString()
   @IsNotEmpty({ message: 'Nome do enviante deve ser inserida' })
   @ApiProperty({
     example: 'Carlos Eduardo',

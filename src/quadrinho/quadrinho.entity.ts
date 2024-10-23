@@ -16,6 +16,9 @@ export class QUADRINHO {
   @JoinColumn({ name: 'ID_COLECAO', referencedColumnName: 'ID' })
   colecao: COLECAO;
 
+  @Column({ type: 'text' })
+  SINOPSE: string;
+
   @Column()
   LANCAMENTO: string;
 

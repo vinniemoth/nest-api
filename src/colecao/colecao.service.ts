@@ -5,13 +5,17 @@ import { CriaColecaoDto } from './dto/criaColecao.dto';
 import { AlteraColecaoDTO } from './dto/alteraColecao.dto';
 import { RetornaColecaoDto } from './dto/retornaColecao.dto';
 import { COLECAO } from './colecao.entity';
+
 import { EditoraService } from 'src/editora/editora.service';
+import { EDITORA } from 'src/editora/editora.entity';
 
 @Injectable()
 export class ColecaoService {
   constructor(
     @Inject('COLECAO_REPOSITORY')
     private readonly colecaoRepository: Repository<COLECAO>,
+    @Inject('EDITORA_REPOSITORY')
+    private readonly editoraRepository: Repository<EDITORA>,
     private editoraService: EditoraService,
   ) {}
 
@@ -73,6 +77,7 @@ export class ColecaoService {
   localizarID(ID: string): Promise<COLECAO> {
     return this.colecaoRepository.findOne({
       where: { ID },
+      relations: ['editora'],
     });
   }
 
@@ -90,5 +95,15 @@ export class ColecaoService {
       throw new NotFoundException(`Coleção com nome ${nome} não encontrada`);
     }
     return colecoesEncontradas;
+  }
+
+  // Se der errado apaga
+
+  async listarPorNomeEditora(nomeEditora: string): Promise<COLECAO[]> {
+    return this.colecaoRepository
+      .createQueryBuilder('colecao')
+      .leftJoinAndSelect('colecao.editora', 'editora')
+      .where('editora.NOME = :nomeEditora', { nomeEditora })
+      .getMany();
   }
 }

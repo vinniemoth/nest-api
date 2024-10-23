@@ -84,6 +84,13 @@ export class QuadrinhoController {
     return this.quadrinhoService.pesquisaId(id);
   }
 
+  @Get('colecao/:colecaoName')
+  async findByColecao(
+    @Param('colecaoName') colecaoName: string,
+  ): Promise<QUADRINHO[]> {
+    return await this.quadrinhoService.findByColecao(colecaoName);
+  }
+
   @ApiResponse({
     status: 200,
     description: 'Quadrinho atualizado com sucesso',

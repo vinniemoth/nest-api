@@ -5,6 +5,7 @@ import { ColecaoService } from './colecao.service';
 import { ColecaoController } from './colecao.controller';
 import { EditoraProvider } from 'src/editora/editora.provider';
 import { EditoraService } from 'src/editora/editora.service';
+import { EditoraModule } from 'src/editora/editora.module';
 
 @Module({
   imports: [DatabaseModule],

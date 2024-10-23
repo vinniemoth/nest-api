@@ -52,7 +52,7 @@ export class ColecaoController {
     description:
       'Retorna que não foi possível encontrar o ID da coleção, favor checar as informações',
   })
-  @Get('ID-:id')
+  @Get(':id')
   async listarID(@Param('id') id: string): Promise<COLECAO> {
     return this.colecaoService.localizarID(id);
   }
@@ -79,5 +79,12 @@ export class ColecaoController {
   @Get('resultados-de-busca')
   async buscarColecao(@Query('nome') nome: string): Promise<COLECAO[]> {
     return this.colecaoService.buscarColecao(nome);
+  }
+
+  @Get('editora/:nomeEditora')
+  async listarPorNomeEditora(
+    @Param('nomeEditora') nomeEditora: string,
+  ): Promise<COLECAO[]> {
+    return this.colecaoService.listarPorNomeEditora(nomeEditora);
   }
 }

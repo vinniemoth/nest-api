@@ -8,5 +8,6 @@ import { EditoraProvider } from './editora.provider';
   imports: [DatabaseModule],
   controllers: [EditoraController],
   providers: [...EditoraProvider, EditoraService],
+  exports: [EditoraService],
 })
 export class EditoraModule {}
