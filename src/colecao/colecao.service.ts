@@ -5,7 +5,6 @@ import { CriaColecaoDto } from './dto/criaColecao.dto';
 import { AlteraColecaoDTO } from './dto/alteraColecao.dto';
 import { RetornaColecaoDto } from './dto/retornaColecao.dto';
 import { COLECAO } from './colecao.entity';
-
 import { EditoraService } from 'src/editora/editora.service';
 import { EDITORA } from 'src/editora/editora.entity';
 
@@ -14,8 +13,6 @@ export class ColecaoService {
   constructor(
     @Inject('COLECAO_REPOSITORY')
     private readonly colecaoRepository: Repository<COLECAO>,
-    @Inject('EDITORA_REPOSITORY')
-    private readonly editoraRepository: Repository<EDITORA>,
     private editoraService: EditoraService,
   ) {}
 
@@ -31,16 +28,17 @@ export class ColecaoService {
     colecao.FOTO = dados.FOTO;
     colecao.SINOPSE = dados.SINOPSE;
     colecao.editora = await this.editoraService.localizarNome(dados.EDITORA);
+
     return this.colecaoRepository
       .save(colecao)
       .then((result) => {
-        return <RetornaColecaoDto>{
+        return {
           status: 'Coleção criada',
           colecao: colecao,
         };
       })
       .catch((error) => {
-        return <RetornaColecaoDto>{
+        return {
           status: 'Erro ao criar a coleção',
           colecao: error,
         };
@@ -53,38 +51,44 @@ export class ColecaoService {
   ): Promise<RetornaColecaoDto> {
     const colecao = await this.localizarID(id);
     Object.entries(dados).forEach(([chave, valor]) => {
-      if (chave === 'id') {
-        return;
+      if (chave !== 'id') {
+        colecao[chave] = valor;
       }
-      colecao[chave] = valor;
     });
+
     return this.colecaoRepository
       .save(colecao)
       .then((result) => {
-        return <RetornaColecaoDto>{
+        return {
           status: 'Coleção alterada',
           colecao: colecao,
         };
       })
       .catch((error) => {
-        return <RetornaColecaoDto>{
+        return {
           status: 'Erro ao alterar a coleção',
           colecao: error,
         };
       });
   }
 
-  localizarID(ID: string): Promise<COLECAO> {
-    return this.colecaoRepository.findOne({
+  async localizarID(ID: string): Promise<COLECAO> {
+    const colecao = await this.colecaoRepository.findOne({
       where: { ID },
       relations: ['editora'],
     });
+    if (!colecao) {
+      throw new NotFoundException(`Coleção com ID ${ID} não encontrada`);
+    }
+    return colecao;
   }
 
-  localizarNome(NOME: string): Promise<COLECAO> {
-    return this.colecaoRepository.findOne({
-      where: { NOME },
-    });
+  async localizarNome(NOME: string): Promise<COLECAO> {
+    const colecao = await this.colecaoRepository.findOne({ where: { NOME } });
+    if (!colecao) {
+      throw new NotFoundException(`Coleção com nome ${NOME} não encontrada`);
+    }
+    return colecao;
   }
 
   async buscarColecao(nome: string): Promise<COLECAO[]> {
@@ -96,8 +100,6 @@ export class ColecaoService {
     }
     return colecoesEncontradas;
   }
-
-  // Se der errado apaga
 
   async listarPorNomeEditora(nomeEditora: string): Promise<COLECAO[]> {
     return this.colecaoRepository
