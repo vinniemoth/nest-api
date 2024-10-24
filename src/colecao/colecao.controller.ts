@@ -5,11 +5,15 @@ import { ColecaoService } from './colecao.service';
 import { CriaColecaoDto } from './dto/criaColecao.dto';
 import { RetornaColecaoDto } from './dto/retornaColecao.dto';
 import { AlteraColecaoDTO } from './dto/alteraColecao.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { EDITORA } from 'src/editora/editora.entity';
 
 @ApiTags('Coleção')
 @Controller('colecao')
 export class ColecaoController {
-  constructor(private readonly colecaoService: ColecaoService) {}
+  constructor(
+    private readonly colecaoService: ColecaoService
+    ) {}
 
   @ApiResponse({
     status: 201,
@@ -54,5 +58,10 @@ export class ColecaoController {
   @Get('resultados-de-busca')
   async buscarColecao(@Query('nome') nome: string): Promise<COLECAO[]> {
     return this.colecaoService.buscarColecao(nome);
+  }
+
+  @Get('editora/:nome')
+  async listarPorNomeEditora(@Param('nome') nome:string): Promise<COLECAO[]>{
+    return this.colecaoService.listarPorNomeEditora(nome)
   }
 }
